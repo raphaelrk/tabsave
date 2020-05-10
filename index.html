@@ -12,8 +12,10 @@
 			height: 300px;
 			display: flex;
 			flex-direction: column;
+
+			font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 		}
-		#textarea {
+		.textarea {
 			overflow-x: scroll;
 			overflow-y: scroll;
 			flex: 1;
@@ -32,7 +34,7 @@
 			color: #222;
 			font-size: 13px;
 			font-weight: bold;
-			font-family: sans-serif;
+			/*font-family: sans-serif;*/
 			border-top: 1px solid #dfdfdf;
 			text-transform: uppercase;
 			background: #f7f7f7;
@@ -40,12 +42,29 @@
 			padding: 12px;
 			outline: 0;
 		}
+		.nav {
+			display: flex;
+			padding: 12px;
+		}
+		.nav-item {
+			font-size: 14px;
+			font-weight: 700;
+			margin-right: 8px;
+			cursor: pointer;
+			/*font-family: sans-serif;*/
+		}
 	</style>	
 </head>
 <body>
 
-	<div id="textarea" contenteditable="true"></div>
-	<button id="copy-window-btn">Copy window</button>
+	<div class="nav">
+		<div class="nav-item" id="nav-curr">current window</div>
+		<div class="nav-item" id="nav-all">all windows</div>
+	</div>
+
+	<div class="textarea" id="textarea" contenteditable="true"></div>
+	<!-- <div class="textarea" id="textarea-all-windows" contenteditable="true"></div> -->
+	<button id="copy-window-btn">Copy</button>
 	<!-- <button id="copy-all-windows-btn">Copy all windows</button> -->
 	<script src="script.js"></script>
 

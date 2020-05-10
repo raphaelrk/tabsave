@@ -1,23 +1,35 @@
 window.addEventListener("load", () => {
-    chrome.tabs.query({ "currentWindow": true }, tabs => {
-        const urls = tabs.map(tab => (`
-            ${tab.title}
-            <br>
-            <a href="${escape(tab.url)}">${escape(tab.url)}</a>
-        `));
-        const textarea = document.querySelector("#textarea");
-        textarea.innerHTML = urls.join("<br>");
-        // textarea.select();
-        // document.execCommand("copy");
-    });
-    document.querySelector("button").addEventListener("click", () => {
-        copy();
-        // const urls = document.querySelector("#textarea").value.split("\n");
-        // urls.map(url => chrome.tabs.create({ "url": url.trim(), "active": false }));
-    });
 
     const textarea = document.querySelector("#textarea");
-    const copy = () => {
+    const button = document.querySelector("button");
+    const navCurrBtn = document.querySelector("#nav-curr");
+    const navAllBtn = document.querySelector("#nav-all");
+    // let onlyCurrentWindow = true; // false => all windows
+
+    const setText = (onlyCurrentWindow) => {
+        // set body
+        console.log("moo", onlyCurrentWindow);
+        chrome.tabs.query({ "currentWindow": onlyCurrentWindow }, tabs => {
+
+            const tabsByWindow = {};
+            tabs.forEach(tab => {
+                tabsByWindow[tab.windowId] = tabsByWindow[tab.windowId] || [];
+                tabsByWindow[tab.windowId].push(tab);
+            });
+
+            const html = Object.values(tabsByWindow).map(tabs => {
+                return tabs.map(tab => (`
+                    ${tab.title}
+                    <br>
+                    <a href="${escape(tab.url)}">${escape(tab.url)}</a>
+                `)).join("<br>");
+            }).join("<br><br>")
+
+            textarea.innerHTML = html;
+        });
+    };
+
+    const selectText = (shouldCopy) => {
         window.setTimeout(function() {
             var sel, range;
             if (window.getSelection && document.createRange) {
@@ -31,10 +43,36 @@ window.addEventListener("load", () => {
                 range.moveToElementText(textarea);
                 range.select();
             }
-            document.execCommand("copy");
-            document.querySelector("button").innerText = "Copied window!";
+            if (shouldCopy) {
+                document.execCommand("copy");
+                button.innerText = "Copied!";
+                setTimeout(() => {
+                    if (button.innerText.toLowerCase() === "copied!") button.innerText = "Copy";
+                }, 1000);
+            }
         }, 1);
     }
-    // textarea.onfocus = copy;
-    copy();
+
+    const setMode = (onlyCurrentWindow) => {
+        navCurrBtn.style.fontWeight = onlyCurrentWindow ? "700" : "400";
+        navAllBtn.style.fontWeight = onlyCurrentWindow ? "400" : "700";
+        setText(onlyCurrentWindow);
+        selectText(false);
+    };
+
+    setMode(true);
+
+    button.addEventListener("click", () => {
+        selectText(true);
+        // open urls:
+        // const urls = document.querySelector("#textarea").value.split("\n");
+        // urls.map(url => chrome.tabs.create({ "url": url.trim(), "active": false }));
+    });
+    navCurrBtn.addEventListener("click", () => {
+        setMode(true);
+    });
+    navAllBtn.addEventListener("click", () => {
+        setMode(false);
+    });
+    
 });
