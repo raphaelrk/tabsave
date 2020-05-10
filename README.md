@@ -1,3 +1,5 @@
-**Chrome:** https://chrome.google.com/webstore/detail/tablist/eagbohciligljbgpbdbflaloangiodhe
+Originally forked from https://github.com/slymax/tablist
 
-**Firefox:** https://addons.mozilla.org/en-US/firefox/addon/tablist
+Quickly save all your tabs
+
+Not yet on the chrome store
