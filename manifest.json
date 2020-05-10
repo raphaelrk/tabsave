@@ -11,5 +11,6 @@
   },
   "icons": {
     "128": "icon.png"
-  }
+  },
+  "content_security_policy": "script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; object-src 'self'"
 }

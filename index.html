@@ -9,15 +9,20 @@
 		body {
 			margin: 0;
 			width: 424px;
-		}
-		textarea {
-			width: 400px;
 			height: 300px;
-			font-family: monospace;
+			display: flex;
+			flex-direction: column;
+		}
+		#textarea {
+			overflow-x: scroll;
+			overflow-y: scroll;
+			flex: 1;
 			font-size: 14px;
 			padding: 12px;
 			color: #222;
-			resize: none;
+			white-space: nowrap;
+
+			width: 100%;
 			outline: 0;
 			border: 0;
 		}
@@ -35,11 +40,19 @@
 			padding: 12px;
 			outline: 0;
 		}
-	</style>
+	</style>	
 </head>
 <body>
-	<div contenteditable="true"></div>
-	<button>Copy</button>
+
+	<div id="textarea" contenteditable="true"></div>
+	<button id="copy-window-btn">Copy window</button>
+	<!-- <button id="copy-all-windows-btn">Copy all windows</button> -->
 	<script src="script.js"></script>
+
+	<!-- <div id="root"></div> -->
+	<!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> -->
+	<!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script> -->
+	<!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script> -->
+	<!-- <script type="text/babel" src="App.js"></script> -->
 </body>
 </html>
