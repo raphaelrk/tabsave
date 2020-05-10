@@ -6,7 +6,7 @@ window.addEventListener("load", () => {
     const navAllBtn = document.querySelector("#nav-all");
 
     const setText = (onlyCurrentWindow) => {
-        chrome.tabs.query({ "currentWindow": onlyCurrentWindow }, tabs => {
+        chrome.tabs.query(onlyCurrentWindow ? { "currentWindow": onlyCurrentWindow } : {} tabs => {
 
             const tabsByWindow = {};
             tabs.forEach(tab => {
