@@ -1,8 +1,8 @@
 {
-  "name": "Tablist",
-  "version": "1.0.2",
+  "name": "Tabsave",
+  "version": "2.0.1",
   "manifest_version": 2,
-  "description": "a browser extension to copy and paste lists of open tabs",
+  "description": "Quickly save all your tabs",
   "permissions": [
     "tabs"
   ],
@@ -11,6 +11,5 @@
   },
   "icons": {
     "128": "icon.png"
-  },
-  "content_security_policy": "script-src 'self' https://unpkg.com https://cdnjs.cloudflare.com; object-src 'self'"
+  }
 }

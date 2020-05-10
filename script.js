@@ -4,11 +4,8 @@ window.addEventListener("load", () => {
     const button = document.querySelector("button");
     const navCurrBtn = document.querySelector("#nav-curr");
     const navAllBtn = document.querySelector("#nav-all");
-    // let onlyCurrentWindow = true; // false => all windows
 
     const setText = (onlyCurrentWindow) => {
-        // set body
-        console.log("moo", onlyCurrentWindow);
         chrome.tabs.query({ "currentWindow": onlyCurrentWindow }, tabs => {
 
             const tabsByWindow = {};
@@ -57,16 +54,13 @@ window.addEventListener("load", () => {
         navCurrBtn.style.fontWeight = onlyCurrentWindow ? "700" : "400";
         navAllBtn.style.fontWeight = onlyCurrentWindow ? "400" : "700";
         setText(onlyCurrentWindow);
-        selectText(false);
+        setTimeout(() => selectText(false), 100);
     };
 
     setMode(true);
 
     button.addEventListener("click", () => {
         selectText(true);
-        // open urls:
-        // const urls = document.querySelector("#textarea").value.split("\n");
-        // urls.map(url => chrome.tabs.create({ "url": url.trim(), "active": false }));
     });
     navCurrBtn.addEventListener("click", () => {
         setMode(true);

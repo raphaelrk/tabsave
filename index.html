@@ -12,7 +12,6 @@
 			height: 300px;
 			display: flex;
 			flex-direction: column;
-
 			font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 		}
 		.textarea {
@@ -34,13 +33,18 @@
 			color: #222;
 			font-size: 13px;
 			font-weight: bold;
-			/*font-family: sans-serif;*/
 			border-top: 1px solid #dfdfdf;
 			text-transform: uppercase;
 			background: #f7f7f7;
 			cursor: pointer;
 			padding: 12px;
 			outline: 0;
+		}
+		button:hover {
+			background: #f0f0f0;
+		}
+		button:active {
+			background: #e0e0e0;
 		}
 		.nav {
 			display: flex;
@@ -51,7 +55,10 @@
 			font-weight: 700;
 			margin-right: 8px;
 			cursor: pointer;
-			/*font-family: sans-serif;*/
+			color: #000;
+		}
+		.nav-item:hover {
+			color: #222;
 		}
 	</style>	
 </head>
@@ -63,15 +70,7 @@
 	</div>
 
 	<div class="textarea" id="textarea" contenteditable="true"></div>
-	<!-- <div class="textarea" id="textarea-all-windows" contenteditable="true"></div> -->
 	<button id="copy-window-btn">Copy</button>
-	<!-- <button id="copy-all-windows-btn">Copy all windows</button> -->
 	<script src="script.js"></script>
-
-	<!-- <div id="root"></div> -->
-	<!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script> -->
-	<!-- <script crossorigin src="https://unpkg.com/react@16/umd/react.production.min.js"></script> -->
-	<!-- <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script> -->
-	<!-- <script type="text/babel" src="App.js"></script> -->
 </body>
 </html>
