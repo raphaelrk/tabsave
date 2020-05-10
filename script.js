@@ -1,6 +1,6 @@
 window.addEventListener("load", () => {
     chrome.tabs.query({ "currentWindow": true }, tabs => {
-        const urls = tabs.map(tab => tab.url);
+        const urls = tabs.map(tab => tab.title + "\n" + tab.url);
         const textarea = document.querySelector("textarea");
         textarea.value = urls.join("\n");
         textarea.select();
