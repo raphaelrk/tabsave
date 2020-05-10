@@ -5,6 +5,24 @@ window.addEventListener("load", () => {
     const navCurrBtn = document.querySelector("#nav-curr");
     const navAllBtn = document.querySelector("#nav-all");
 
+    // https://stackoverflow.com/a/43439734/3273806
+    function unescapeHtml(unsafe) {
+        return unsafe
+            .replace(/&amp;/g, "&")
+            .replace(/&lt;/g, "<")
+            .replace(/&gt;/g, ">")
+            .replace(/&quot;/g, '"')
+            .replace(/&#039;/g, "'")
+    }
+    function escapeHtml(unsafe) {
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     const setText = (onlyCurrentWindow) => {
         chrome.tabs.query(onlyCurrentWindow ? { "currentWindow": onlyCurrentWindow } : {}, tabs => {
 
@@ -18,7 +36,7 @@ window.addEventListener("load", () => {
                 return tabs.map(tab => (`
                     ${tab.title}
                     <br>
-                    <a href="${escape(tab.url)}">${escape(tab.url)}</a>
+                    <a href="${escapeHtml(tab.url)}">${escapeHtml(tab.url)}</a>
                 `)).join("<br>");
             }).join("<br><br>")
 
