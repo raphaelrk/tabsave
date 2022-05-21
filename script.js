@@ -30,6 +30,13 @@ window.addEventListener("load", () => {
             });
         });
     };
+    const isIncognito = (windowId) => {
+        return new Promise((resolve, reject) => {
+            chrome.windows.get(windowId, {}, res => {
+                resolve(res.incognito);
+            })
+        });
+    };
 
     const setText = async (onlyCurrentWindow) => {
         const currentWindowId = await asyncGetCurrentWindowId();
@@ -42,16 +49,31 @@ window.addEventListener("load", () => {
                 tabsByWindow[tab.windowId].push(tab);
             });
 
+            // fetch incognito status of each window
+            // (requires toggling on "Allow In Incognito")
+            const windowInfo = {};
+            await Promise.all(Object.values(tabsByWindow).map(async tabs => {
+                const windowId = tabs[0].windowId;
+                const incognito = await isIncognito(windowId);
+                windowInfo[windowId] = { incognito };
+            }));
+
             // put current window on top
+            // put incognito on bottom (unless it's current window)
             const windows = Object.entries(tabsByWindow);
             windows.sort(([a_id, a_tabs], [b_id, b_tabs]) => {
                 if (a_id == currentWindowId) return -1;
                 if (b_id == currentWindowId) return 1;
+                if (windowInfo[a_id].incognito !== windowInfo[b_id].incognito) { // could be more efficient
+                    if (windowInfo[a_id].incognito) return 1;
+                    return -1;
+                }
                 return 0;
             });
 
             const html = windows.map(([windowId, tabs]) => {
-                return tabs.map(tab => (`
+                const windowPreamble = (windowInfo[windowId].incognito) ? `(Incognito)<br>` : ``;
+                return windowPreamble + tabs.map(tab => (`
                     ${tab.title}
                     <br>
                     <a href="${escapeHtml(tab.url)}">${escapeHtml(tab.url)}</a>
