@@ -75,7 +75,7 @@ window.addEventListener("load", () => {
         setTimeout(() => selectText(false), 100);
     };
 
-    setMode(true);
+    setMode(false);
 
     button.addEventListener("click", () => {
         selectText(true);
