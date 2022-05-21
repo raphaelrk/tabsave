@@ -23,8 +23,18 @@ window.addEventListener("load", () => {
             .replace(/'/g, "&#039;");
     }
 
-    const setText = (onlyCurrentWindow) => {
-        chrome.tabs.query(onlyCurrentWindow ? { "currentWindow": onlyCurrentWindow } : {}, tabs => {
+    const asyncGetCurrentWindowId = () => {
+        return new Promise((resolve, reject) => {
+            chrome.tabs.query({ "currentWindow": true }, tabs => {
+                resolve(tabs[0].windowId);
+            });
+        });
+    };
+
+    const setText = async (onlyCurrentWindow) => {
+        const currentWindowId = await asyncGetCurrentWindowId();
+
+        chrome.tabs.query(onlyCurrentWindow ? { "currentWindow": onlyCurrentWindow } : {}, async tabs => {
 
             const tabsByWindow = {};
             tabs.forEach(tab => {
@@ -32,7 +42,15 @@ window.addEventListener("load", () => {
                 tabsByWindow[tab.windowId].push(tab);
             });
 
-            const html = Object.values(tabsByWindow).map(tabs => {
+            // put current window on top
+            const windows = Object.entries(tabsByWindow);
+            windows.sort(([a_id, a_tabs], [b_id, b_tabs]) => {
+                if (a_id == currentWindowId) return -1;
+                if (b_id == currentWindowId) return 1;
+                return 0;
+            });
+
+            const html = windows.map(([windowId, tabs]) => {
                 return tabs.map(tab => (`
                     ${tab.title}
                     <br>
@@ -68,10 +86,10 @@ window.addEventListener("load", () => {
         }, 1);
     }
 
-    const setMode = (onlyCurrentWindow) => {
+    const setMode = async (onlyCurrentWindow) => {
         navCurrBtn.style.fontWeight = onlyCurrentWindow ? "700" : "400";
         navAllBtn.style.fontWeight = onlyCurrentWindow ? "400" : "700";
-        setText(onlyCurrentWindow);
+        await setText(onlyCurrentWindow);
         setTimeout(() => selectText(false), 100);
     };
 

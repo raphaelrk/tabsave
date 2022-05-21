@@ -1,6 +1,6 @@
 {
   "name": "Tabsave",
-  "version": "2.1.1",
+  "version": "2.1.2",
   "manifest_version": 2,
   "description": "Quickly save all your tabs",
   "permissions": [
