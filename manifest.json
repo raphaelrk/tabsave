@@ -4,7 +4,8 @@
   "manifest_version": 3,
   "description": "Quickly save all your tabs",
   "permissions": [
-    "tabs"
+    "tabs",
+    "tabGroups"
   ],
   "action": {
     "default_popup": "index.html"
