@@ -14,16 +14,23 @@
 			flex-direction: column;
 			font-family: -apple-system, system-ui, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Ubuntu, Arial, sans-serif;
 		}
+		.textarea-container {
+			flex: 1;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			border: 1px solid #c3c3c3;
+			border-radius: 4px;
+			margin: 12px;
+		}
 		.textarea {
 			overflow-x: scroll;
 			overflow-y: scroll;
 			flex: 1;
-			font-size: 14px;
+			font-size: 12px;
 			padding: 12px;
 			color: #222;
 			white-space: nowrap;
-
-			width: 100%;
 			outline: 0;
 			border: 0;
 		}
@@ -69,7 +76,9 @@
 		<div class="nav-item" id="nav-curr">current window</div>
 	</div>
 
-	<div class="textarea" id="textarea" contenteditable="true"></div>
+	<div class="textarea-container">
+		<div class="textarea" id="textarea" contenteditable="true"></div>
+	</div>
 	<button id="copy-window-btn">Copy</button>
 	<script src="script.js"></script>
 </body>
