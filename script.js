@@ -1,5 +1,5 @@
 const textarea = document.querySelector("#textarea");
-const copyButton = document.querySelector("button");
+const copyButton = document.querySelector("#copy-window-btn");
 const navCurrBtn = document.querySelector("#nav-curr");
 const navAllBtn = document.querySelector("#nav-all");
 
