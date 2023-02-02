@@ -83,7 +83,7 @@ export default function TabCopier() {
 }
 
 function WindowList({ nav, windowAndTabInformation }: { nav: "all" | "curr", windowAndTabInformation: WindowAndTabInformation }) {
-  const [windows, tabGroupIdToTabGroup, currentWindowId] = windowAndTabInformation;
+  const { windows } = windowAndTabInformation;
 
   const filteredWindows = useMemo(() => {
     if (nav === "all") {
@@ -137,9 +137,9 @@ function WindowList({ nav, windowAndTabInformation }: { nav: "all" | "curr", win
 }
 
 function WindowInfo({ window, windowAndTabInformation }: { window: chrome.windows.Window, windowAndTabInformation: WindowAndTabInformation }) {
-  const [windows, tabGroupIdToTabGroup, currentWindowId] = windowAndTabInformation;
+  const { tabGroupIdToTabGroup, currWindowId } = windowAndTabInformation;
 
-  const focused = window.focused || window.id === currentWindowId;
+  const focused = window.focused || window.id === currWindowId;
 
   const windowInfo = [
     `${window.tabs.length} ${window.tabs.length === 1 ? `tab` : `tabs`}`,
