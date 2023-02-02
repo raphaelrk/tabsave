@@ -3,7 +3,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Styles } from "./Styles";
 import "./index.css";
-import { css } from "@emotion/react";
 
 export default function TabCopier() {
 
@@ -29,14 +28,22 @@ export default function TabCopier() {
     }
   }
 
+  const updateWindowAndTabCount = () => {
+    const windows = getWindowsFromDivContent();
+    setWindowCount(windows.length);
+    setTabCount(windows.reduce((a, b) => a + b.length, 0));
+  };
+
+  useEffect(() => {
+    updateWindowAndTabCount();
+  }, []);
+
   // detect changes to the div content
   useEffect(() => {
     const div = document.querySelector('#textarea') as HTMLElement;
     const observer = new MutationObserver(() => {
       // console.log("mutation");
-      const windows = getWindowsFromDivContent();
-      setWindowCount(windows.length);
-      setTabCount(windows.reduce((a, b) => a + b.length, 0));
+      updateWindowAndTabCount();
     });
     observer.observe(div, { childList: true, subtree: true });
     return () => observer.disconnect();
@@ -51,7 +58,6 @@ export default function TabCopier() {
   return (
     <div css={styles.container}>
       <div css={styles.textareaContainer}>
-        {/* <div id={"textarea"} css={styles.textarea}> */}
         <div ref={divTextAreaRef} id={"textarea"} css={styles.textarea} contentEditable={true} onClick={onInitialClick}>
           <p style={{ margin: 0, fontSize: 13 }}>
             Example Domain
@@ -74,16 +80,24 @@ const styles: Styles = {
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    backgroundColor: "#fff",
+    backgroundColor: "#be1436",
   },
   textareaContainer: {
     flex: 1,
     overflow: "hidden",
     display: "flex",
     flexDirection: "column",
-    border: "1px solid #c3c3c3",
-    borderRadius: 4,
-    margin: 12,
+    backgroundColor: "#fff",
+    // border: "1px solid #c3c3c3",
+    // border: "none",
+    border: "1px solid #000",
+    outline: 'none',
+    borderRadius: 8,
+    marginTop: 12,
+    marginLeft: 12,
+    marginRight: 12,
+    marginBottom: 16,
+    boxShadow: '0 2px 8px 0 rgba(0,0,0,0.3)',
   },
   textarea: {
     overflowX: "scroll",
@@ -97,22 +111,30 @@ const styles: Styles = {
     border: 0,
   },
   loadButton: {
-    border: 0,
-    width: "100%",
+    marginTop: 0,
+    marginLeft: 12,
+    marginRight: 12,
+    marginBottom: 12,
+    borderRadius: 8,
+    boxShadow: '0 2px 8px 0 rgba(0,0,0,0.3)',
+    // border: 'none',
+    border: "1px solid #000",
     color: "#222",
     fontSize: 13,
     fontWeight: "bold",
-    borderTop: "1px solid #dfdfdf",
     textTransform: "uppercase",
     background: "#f7f7f7",
     cursor: "pointer",
-    padding: 12,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    height: 54,
     outline: 0,
     '&:hover': {
-      background: "#f0f0f0",
+      background: "#e0e0e0",
     },
     '&:active': {
-      background: "#e0e0e0",
+      background: "#d0d0d0",
     },
   },
 };
